@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ArrowRight, Check, Mail, ShoppingCart, X } from 'lucide-react';
 import AddToCartButton from './AddToCartButton';
 
-const CTA = () => {
+const CTA = ({ onAuthOpen }: { onAuthOpen?: () => void }) => {
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [showDemoModal, setShowDemoModal] = useState(false);
@@ -64,6 +64,7 @@ const CTA = () => {
             variant="primary"
             size="lg"
             className="bg-gradient-to-r from-cyan-400 to-blue-500 text-black hover:from-cyan-300 hover:to-blue-400"
+            onAuthOpen={onAuthOpen}
           />
           
           <button 

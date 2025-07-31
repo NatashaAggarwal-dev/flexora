@@ -11,13 +11,18 @@ import Footer from './components/Footer';
 import StickyButton from './components/StickyButton';
 import CartSidebar from './components/CartSidebar';
 import OrderTracking from './components/OrderTracking';
+import AuthModal from './components/AuthModal';
+import UserProfile from './components/UserProfile';
 import { CartProvider } from './context/CartContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import ErrorBoundary from './components/ErrorBoundary';
 
 
 function AppContent() {
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState<'home' | 'tracking'>('home');
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState<'home' | 'tracking' | 'profile'>('home');
+  const { user, loading } = useAuth();
 
   // Handle URL hash changes for simple routing
   useEffect(() => {
@@ -25,6 +30,8 @@ function AppContent() {
       const hash = window.location.hash;
       if (hash === '#track') {
         setCurrentPage('tracking');
+      } else if (hash === '#profile') {
+        setCurrentPage('profile');
       } else {
         setCurrentPage('home');
       }
@@ -38,30 +45,60 @@ function AppContent() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
+  // Show loading screen while checking authentication
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-600 mx-auto"></div>
+          <p className="mt-4 text-gray-400">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (currentPage === 'tracking') {
     return (
       <div className="min-h-screen bg-white">
-        <Header onCartOpen={() => setIsCartOpen(true)} />
+        <Header onCartOpen={() => setIsCartOpen(true)} onAuthOpen={() => setIsAuthModalOpen(true)} />
         <OrderTracking />
         <Footer />
         <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+        <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+      </div>
+    );
+  }
+
+  if (currentPage === 'profile') {
+    if (!user) {
+      // Redirect to home if not authenticated
+      window.location.hash = '';
+      return null;
+    }
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Header onCartOpen={() => setIsCartOpen(true)} onAuthOpen={() => setIsAuthModalOpen(true)} />
+        <UserProfile />
+        <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+        <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <Header onCartOpen={() => setIsCartOpen(true)} />
+      <Header onCartOpen={() => setIsCartOpen(true)} onAuthOpen={() => setIsAuthModalOpen(true)} />
       <Hero />
       <Features />
       <Audience />
       <Innovation />
       <FAQ />
       <Contact />
-      <CTA />
+      <CTA onAuthOpen={() => setIsAuthModalOpen(true)} />
       <Footer />
       <StickyButton />
       <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
     </div>
   );
 }
@@ -69,9 +106,11 @@ function AppContent() {
 function App() {
   return (
     <ErrorBoundary>
-      <CartProvider>
-        <AppContent />
-      </CartProvider>
+      <AuthProvider>
+        <CartProvider>
+          <AppContent />
+        </CartProvider>
+      </AuthProvider>
     </ErrorBoundary>
   );
 }

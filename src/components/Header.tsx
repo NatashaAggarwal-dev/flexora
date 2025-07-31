@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ShoppingCart } from 'lucide-react';
+import { Menu, X, ShoppingCart, User, LogOut } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 
 interface HeaderProps {
   onCartOpen: () => void;
+  onAuthOpen: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ onCartOpen }) => {
+const Header: React.FC<HeaderProps> = ({ onCartOpen, onAuthOpen }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { getTotalItems } = useCart();
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,9 +62,44 @@ const Header: React.FC<HeaderProps> = ({ onCartOpen }) => {
                         {getTotalItems()}
                       </span>
                     </button>
+                    
+                    {user ? (
+                      <div className="flex items-center space-x-3">
+                        <button
+                          onClick={() => window.location.hash = '#profile'}
+                          className="flex items-center space-x-2 text-gray-600 hover:text-cyan-600 transition-colors"
+                        >
+                          <User size={20} />
+                          <span className="font-subheading">{user.firstName}</span>
+                        </button>
+                        <button
+                          onClick={logout}
+                          className="flex items-center space-x-2 text-gray-600 hover:text-red-600 transition-colors"
+                          title="Logout"
+                        >
+                          <LogOut size={20} />
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={onAuthOpen}
+                        className="bg-cyan-600 text-white px-6 py-2 rounded-full font-subheading hover:bg-cyan-500 transition-colors"
+                      >
+                        Sign In
+                      </button>
+                    )}
                   </div>
 
                             <div className="md:hidden flex items-center space-x-2">
+                    {!user && (
+                      <button
+                        onClick={onAuthOpen}
+                        className="p-2 text-gray-600 hover:text-cyan-600 transition-colors"
+                        title="Sign In"
+                      >
+                        <User size={20} />
+                      </button>
+                    )}
                     <button
                       className="text-gray-900"
                       onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -90,6 +128,42 @@ const Header: React.FC<HeaderProps> = ({ onCartOpen }) => {
               <ShoppingCart size={20} />
               <span>Cart ({getTotalItems()})</span>
             </button>
+            
+            {user ? (
+              <div className="space-y-3">
+                <button
+                  onClick={() => {
+                    window.location.hash = '#profile';
+                    setIsMenuOpen(false);
+                  }}
+                  className="w-full flex items-center justify-center space-x-2 bg-gray-800 text-white px-6 py-3 rounded-full font-subheading hover:bg-gray-700 transition-colors"
+                >
+                  <User size={20} />
+                  <span>My Profile</span>
+                </button>
+                <button
+                  onClick={() => {
+                    logout();
+                    setIsMenuOpen(false);
+                  }}
+                  className="w-full flex items-center justify-center space-x-2 bg-red-600 text-white px-6 py-3 rounded-full font-subheading hover:bg-red-500 transition-colors"
+                >
+                  <LogOut size={20} />
+                  <span>Logout</span>
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => {
+                  onAuthOpen();
+                  setIsMenuOpen(false);
+                }}
+                className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-6 py-3 rounded-full font-subheading hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 flex items-center justify-center space-x-2"
+              >
+                <User size={20} />
+                <span>Sign In / Sign Up</span>
+              </button>
+            )}
 
 
           </div>

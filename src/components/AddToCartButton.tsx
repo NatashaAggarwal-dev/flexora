@@ -1,6 +1,7 @@
 import React from 'react';
-import { ShoppingCart, Check } from 'lucide-react';
+import { ShoppingCart, Check, LogIn } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 
 interface AddToCartButtonProps {
   item: {
@@ -13,19 +14,28 @@ interface AddToCartButtonProps {
   variant?: 'primary' | 'secondary' | 'outline';
   size?: 'sm' | 'md' | 'lg';
   className?: string;
+  onAuthOpen?: () => void;
 }
 
 const AddToCartButton: React.FC<AddToCartButtonProps> = ({ 
   item, 
   variant = 'primary', 
   size = 'md',
-  className = ''
+  className = '',
+  onAuthOpen
 }) => {
   const { addToCart, cartItems } = useCart();
+  const { user } = useAuth();
   
   const isInCart = cartItems.some(cartItem => cartItem.id === item.id);
 
   const handleAddToCart = () => {
+    if (!user) {
+      if (onAuthOpen) {
+        onAuthOpen();
+      }
+      return;
+    }
     addToCart(item);
   };
 
@@ -55,6 +65,11 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
         <>
           <Check className="w-5 h-5" />
           <span>Added to Cart</span>
+        </>
+      ) : !user ? (
+        <>
+          <LogIn className="w-5 h-5" />
+          <span>Sign In to Add</span>
         </>
       ) : (
         <>
