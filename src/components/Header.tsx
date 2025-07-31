@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ShoppingCart, Zap, User, LogIn } from 'lucide-react';
+import { Menu, X, ShoppingCart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { useAuth } from '../context/AuthContext';
-import AccountMenu from './AccountMenu';
 
 interface HeaderProps {
   onCartOpen: () => void;
@@ -11,9 +9,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ onCartOpen }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
   const { getTotalItems } = useCart();
-  const { user, openAuthModal, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,47 +59,9 @@ const Header: React.FC<HeaderProps> = ({ onCartOpen }) => {
                         {getTotalItems()}
                       </span>
                     </button>
-                    
-                    {user ? (
-                      <button
-                        onClick={() => setIsAccountMenuOpen(true)}
-                        className="flex items-center space-x-2 text-gray-600 hover:text-cyan-600 transition-colors"
-                      >
-                        <User size={20} />
-                        <span className="font-subheading">{user.name}</span>
-                      </button>
-                    ) : (
-                      <div className="flex items-center space-x-2">
-                        <button
-                          onClick={openAuthModal}
-                          className="flex items-center space-x-2 bg-cyan-600 text-white px-6 py-2 rounded-full font-subheading hover:bg-cyan-500 transition-colors"
-                        >
-                          <LogIn size={18} />
-                          <span>Sign In</span>
-                        </button>
-                        <button
-                          onClick={openAuthModal}
-                          className="p-2 text-gray-600 hover:text-cyan-600 transition-colors"
-                          title="Quick Sign In"
-                        >
-                          <User size={20} />
-                        </button>
-                      </div>
-                    )}
-                    
-
                   </div>
 
                             <div className="md:hidden flex items-center space-x-2">
-                    {!user && (
-                      <button
-                        onClick={openAuthModal}
-                        className="p-2 text-gray-600 hover:text-cyan-600 transition-colors"
-                        title="Sign In"
-                      >
-                        <User size={20} />
-                      </button>
-                    )}
                     <button
                       className="text-gray-900"
                       onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -132,18 +90,7 @@ const Header: React.FC<HeaderProps> = ({ onCartOpen }) => {
               <ShoppingCart size={20} />
               <span>Cart ({getTotalItems()})</span>
             </button>
-            {!user && (
-              <button
-                onClick={() => {
-                  openAuthModal();
-                  setIsMenuOpen(false);
-                }}
-                className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-6 py-2 rounded-full font-subheading hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 flex items-center justify-center space-x-2"
-              >
-                <LogIn size={18} />
-                <span>Sign In / Sign Up</span>
-              </button>
-            )}
+
 
             </button>
           </div>

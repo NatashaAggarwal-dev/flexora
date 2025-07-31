@@ -1,11 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { ArrowRight, Play, LogIn } from 'lucide-react';
+import { ArrowRight, Play } from 'lucide-react';
 import '@google/model-viewer';
-import { useAuth } from '../context/AuthContext';
 
 const Hero = () => {
   const modelViewerRef = useRef<any>(null);
-  const { user, openAuthModal } = useAuth();
 
   useEffect(() => {
     const modelViewer = modelViewerRef.current;
@@ -68,15 +66,7 @@ const Hero = () => {
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={20} />
             </button>
             
-            {!user && (
-              <button 
-                onClick={openAuthModal}
-                className="border-2 border-cyan-600 text-cyan-600 px-8 py-4 rounded-full font-subheading text-lg hover:bg-cyan-600 hover:text-white transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"
-              >
-                <LogIn size={20} />
-                <span>Get Started</span>
-              </button>
-            )}
+
           </div>
           
           <div className="mt-12 flex items-center justify-center lg:justify-start space-x-12 text-sm font-body text-gray-500">

@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { X, Plus, Minus, Trash2, ShoppingBag, ArrowRight, CreditCard } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { useAuth } from '../context/AuthContext';
 import PaymentModal from './PaymentModal';
-import { initiatePayment } from '../services/paymentService';
-import { createOrder, addOrderItems, updatePaymentStatus } from '../services/userService';
 
 interface CartSidebarProps {
   isOpen: boolean;
@@ -13,7 +10,6 @@ interface CartSidebarProps {
 
 const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
   const { cartItems, updateQuantity, removeFromCart, getTotalPrice, getTotalItems, clearCart } = useCart();
-  const { user } = useAuth();
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -143,65 +139,15 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
 
             {/* Checkout Button */}
             <button 
-              onClick={async () => {
-                if (cartItems.length === 0 || !user) return;
-                
-                setIsProcessing(true);
-                try {
-                  // Create order in Supabase
-                  const orderNumber = `FLEX-${Date.now()}`;
-                  const order = await createOrder({
-                    user_id: user.id,
-                    order_number: orderNumber,
-                    total_amount: getTotalPrice(),
-                    currency: 'INR',
-                    payment_status: 'pending',
-                    payment_method: 'razorpay'
-                  });
-
-                  if (!order) {
-                    throw new Error('Failed to create order');
-                  }
-
-                  // Add order items (simplified)
-                  const orderItems = cartItems.map(item => ({
-                    order_id: order.id,
-                    product_name: item.name,
-                    quantity: item.quantity,
-                    unit_price: item.price,
-                    total_price: item.price * item.quantity
-                  }));
-
-                  await addOrderItems(orderItems);
-
-                  // Use Razorpay for payment
-                  await initiatePayment({
-                    amount: getTotalPrice(),
-                    currency: 'INR',
-                    orderId: order.id,
-                    customerName: user.name,
-                    customerEmail: user.email,
-                    customerPhone: user.profile?.phone || '+91-9999999999',
-                    description: `Flexora Order - ${cartItems.length} items`
-                  });
-                  
-                  // If payment is successful, update payment status and clear cart
-                  await updatePaymentStatus(order.id, 'paid');
-                  clearCart();
-                  onClose();
-                } catch (error) {
-                  console.error('Payment failed:', error);
-                  // Fallback to mock payment modal
-                  setShowPaymentModal(true);
-                } finally {
-                  setIsProcessing(false);
-                }
+              onClick={() => {
+                if (cartItems.length === 0) return;
+                setShowPaymentModal(true);
               }}
-              disabled={cartItems.length === 0 || !user || isProcessing}
+              disabled={cartItems.length === 0 || isProcessing}
               className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-4 rounded-xl font-subheading hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <CreditCard className="w-5 h-5" />
-              <span>{isProcessing ? 'Processing...' : 'Proceed to Payment (Razorpay)'}</span>
+              <span>{isProcessing ? 'Processing...' : 'Proceed to Payment'}</span>
             </button>
 
             {/* Continue Shopping */}
