@@ -15,17 +15,14 @@ const Contact = () => {
   useEffect(() => {
     const checkForWaitlistEmail = () => {
       const waitlistEmail = localStorage.getItem('waitlistEmail');
-      console.log('Checking for waitlist email:', waitlistEmail);
       
       if (waitlistEmail) {
-        console.log('Found waitlist email, setting in form:', waitlistEmail);
         setFormData(prev => ({
           ...prev,
           email: waitlistEmail
         }));
         // Clear the stored email after using it
         localStorage.removeItem('waitlistEmail');
-        console.log('Cleared waitlist email from localStorage');
       }
     };
 
@@ -51,8 +48,6 @@ const Contact = () => {
     try {
       // Submit form data to Supabase
       await submitContactForm(formData);
-      
-      console.log('Contact form submitted successfully:', formData);
       
       // Show success message
       setIsSubmitted(true);
@@ -154,22 +149,7 @@ const Contact = () => {
                         }`}
                         placeholder="your.email@example.com"
                       />
-                      {/* Debug button - remove this after testing */}
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const testEmail = localStorage.getItem('waitlistEmail');
-                          console.log('Manual check - waitlist email:', testEmail);
-                          if (testEmail) {
-                            setFormData(prev => ({ ...prev, email: testEmail }));
-                            localStorage.removeItem('waitlistEmail');
-                          }
-                        }}
-                        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-xs text-gray-400 hover:text-cyan-600"
-                        title="Debug: Check for waitlist email"
-                      >
-                        🔍
-                      </button>
+
                     </div>
                   </div>
                 </div>

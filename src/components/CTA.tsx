@@ -12,23 +12,14 @@ const CTA = () => {
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
-      console.log('Storing email in localStorage:', email);
-      
       // Store email in localStorage for contact form
       localStorage.setItem('waitlistEmail', email);
-      
-      // Verify email was stored
-      const storedEmail = localStorage.getItem('waitlistEmail');
-      console.log('Verified stored email:', storedEmail);
       
       // Scroll to contact section after a short delay
       setTimeout(() => {
         const contactSection = document.getElementById('contact');
         if (contactSection) {
           contactSection.scrollIntoView({ behavior: 'smooth' });
-          console.log('Scrolled to contact section');
-        } else {
-          console.log('Contact section not found');
         }
       }, 100);
       

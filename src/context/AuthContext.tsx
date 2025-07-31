@@ -66,10 +66,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('Auth state changed:', event, session?.user?.email);
-        
         if (event === 'SIGNED_IN' && session?.user) {
-          console.log('User signed in:', session.user);
           await handleUserSession(session.user);
           
           // Check if profile needs completion (for both Google and email users)
@@ -78,11 +75,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             setIsProfileModalOpen(true);
           }
         } else if (event === 'SIGNED_OUT') {
-          console.log('User signed out');
           setUser(null);
           setIsProfileModalOpen(false);
         } else if (event === 'TOKEN_REFRESHED') {
-          console.log('Token refreshed');
           if (session?.user) {
             await handleUserSession(session.user);
           }

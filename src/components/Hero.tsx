@@ -141,7 +141,6 @@ const Hero = () => {
             camera-target="0m 0m 0m"
             interpolation-decay="200"
             touch-action="pan-x pan-y"
-            class="hover:scale-105 transition-transform duration-500"
           >
             <div className="absolute inset-0 flex items-center justify-center bg-transparent pointer-events-none" id="loading-overlay">
               <div className="text-white text-center bg-black/20 backdrop-blur-sm rounded-lg p-4 border border-white/10">

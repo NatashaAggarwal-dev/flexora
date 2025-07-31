@@ -83,7 +83,6 @@ export const updatePaymentStatus = async (orderId: string, status: string, payme
       .eq('id', orderId);
 
     if (error) throw error;
-    console.log('Payment status updated:', status);
   } catch (error) {
     console.error('Error updating payment status:', error);
   }
@@ -103,7 +102,6 @@ export const initiatePayment = async (options: PaymentOptions) => {
       description: options.description,
       order_id: order.id,
       handler: function (response: any) {
-        console.log('Payment successful:', response);
         // Update payment status in database
         updatePaymentStatus(options.orderId, 'paid', response.razorpay_payment_id);
         alert('Payment successful! Order ID: ' + response.razorpay_order_id);
@@ -118,7 +116,7 @@ export const initiatePayment = async (options: PaymentOptions) => {
       },
       modal: {
         ondismiss: function() {
-          console.log('Payment modal closed');
+          // Payment modal closed
         }
       },
       // Simplified test mode - just UPI and cards
