@@ -6,7 +6,7 @@ const PORT = 5001;
 
 // Enable CORS for all routes
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: ['http://localhost:5173', 'http://localhost:5178', 'http://localhost:3000'],
   credentials: true
 }));
 
@@ -140,7 +140,7 @@ app.listen(PORT, () => {
   console.log(`🚀 Test Backend Server running on port ${PORT}`);
   console.log(`📊 Health check: http://localhost:${PORT}/health`);
   console.log(`🔗 API Base: http://localhost:${PORT}/api`);
-  console.log(`🌐 CORS enabled for: http://localhost:5173`);
+  console.log(`🌐 CORS enabled for: http://localhost:5173, 5178, 3000`);
 });
 
 module.exports = app; 
