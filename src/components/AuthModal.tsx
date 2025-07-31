@@ -40,7 +40,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
     setError(null);
     setSuccess(null);
     setMode(initialMode);
-    onClose();
+        onClose();
   };
 
   const validateEmail = (email: string) => {
@@ -182,8 +182,8 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl p-8 max-w-md w-full mx-4 relative transform transition-all duration-500 scale-100 animate-in">
+    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+      <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full mx-4 my-8 relative transform transition-all duration-500 scale-100 animate-in max-h-[90vh] overflow-y-auto">
         {/* Close button */}
         <button
           onClick={handleClose}
@@ -193,13 +193,13 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
         </button>
 
         {/* Header */}
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-heading text-gray-900 mb-2">
+        <div className="text-center mb-6 sm:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-heading text-gray-900 mb-2">
             {mode === 'login' && 'Welcome Back'}
             {mode === 'signup' && 'Create Account'}
             {mode === 'otp' && 'Verify Phone'}
           </h2>
-          <p className="text-gray-600 font-body">
+          <p className="text-gray-600 font-body text-sm sm:text-base">
             {mode === 'login' && 'Sign in to your Flexora account'}
             {mode === 'signup' && 'Join the future of ergonomic seating'}
             {mode === 'otp' && 'Enter the 6-digit code sent to your phone'}
@@ -207,22 +207,22 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
         </div>
 
         {/* Error/Success Messages */}
-        {error && (
+                {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
             {error}
-          </div>
-        )}
+                  </div>
+                )}
 
-        {success && (
+                {success && (
           <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl text-green-600 text-sm flex items-center">
             <Check className="w-4 h-4 mr-2" />
             {success}
-          </div>
-        )}
+                  </div>
+                )}
 
         {/* Login Form */}
         {mode === 'login' && (
-          <form onSubmit={handleLogin} className="space-y-6">
+          <form onSubmit={handleLogin} className="space-y-4 sm:space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address
@@ -283,13 +283,13 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
             </div>
 
             <div className="relative">
-              <div className="absolute inset-0 flex items-center">
+          <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-300" />
-              </div>
-              <div className="relative flex justify-center text-sm">
+          </div>
+          <div className="relative flex justify-center text-sm">
                 <span className="px-2 bg-white text-gray-500">Or continue with</span>
-              </div>
-            </div>
+          </div>
+        </div>
 
             <button
               type="button"
@@ -318,8 +318,8 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
 
         {/* Signup Form */}
         {mode === 'signup' && (
-          <form onSubmit={handleSignup} className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
+          <form onSubmit={handleSignup} className="space-y-4 sm:space-y-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   First Name
@@ -351,24 +351,24 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
               </div>
             </div>
 
-            <div>
+                            <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                <input
-                  type="email"
+                    </label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <input
+                type="email"
                   value={signupData.email}
                   onChange={(e) => setSignupData({ ...signupData, email: e.target.value })}
                   className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:border-cyan-600 focus:outline-none transition-colors"
                   placeholder="Enter your email"
-                  required
-                />
-              </div>
+                required
+              />
             </div>
+          </div>
 
-            <div>
+                            <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Phone Number (Optional)
               </label>
@@ -387,26 +387,26 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Password
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                <input
-                  type={showPassword ? 'text' : 'password'}
+                    </label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <input
+                type={showPassword ? 'text' : 'password'}
                   value={signupData.password}
                   onChange={(e) => setSignupData({ ...signupData, password: e.target.value })}
                   className="w-full pl-12 pr-12 py-3 bg-gray-50 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:border-cyan-600 focus:outline-none transition-colors"
                   placeholder="Create a password"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </button>
-              </div>
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
             </div>
+          </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -422,13 +422,13 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
                   placeholder="Confirm your password"
                   required
                 />
-                <button
+          <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
                   {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </button>
+          </button>
               </div>
             </div>
 
@@ -455,7 +455,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
 
         {/* OTP Form */}
         {mode === 'otp' && (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {!otpData.otp ? (
               <form onSubmit={handleSendOTP}>
                 <div>
@@ -478,7 +478,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-3 rounded-xl font-subheading hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
+                  className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-3 rounded-xl font-subheading hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-4 sm:mt-6"
                 >
                   {loading ? 'Sending OTP...' : 'Send OTP'}
                 </button>
@@ -506,7 +506,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-3 rounded-xl font-subheading hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
+                  className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-3 rounded-xl font-subheading hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-4 sm:mt-6"
                 >
                   {loading ? 'Verifying...' : 'Verify OTP'}
                 </button>
@@ -514,7 +514,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
                 <button
                   type="button"
                   onClick={() => setOtpData({ ...otpData, otp: '' })}
-                  className="w-full text-cyan-600 hover:text-cyan-500 text-sm font-medium mt-4"
+                  className="w-full text-cyan-600 hover:text-cyan-500 text-sm font-medium mt-3 sm:mt-4"
                 >
                   Resend OTP
                 </button>
@@ -534,7 +534,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
         )}
 
         {/* Privacy Policy */}
-        <div className="mt-8 text-center text-xs text-gray-500">
+        <div className="mt-6 sm:mt-8 text-center text-xs text-gray-500">
           By continuing, you agree to our{' '}
           <a href="/terms" className="text-cyan-600 hover:text-cyan-500">
             Terms of Service
