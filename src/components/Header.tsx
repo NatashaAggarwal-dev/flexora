@@ -92,19 +92,11 @@ const Header: React.FC<HeaderProps> = ({ onCartOpen }) => {
             </button>
 
 
-            </button>
           </div>
         </div>
       )}
 
-      {/* Account Menu */}
-      {user && isAccountMenuOpen && (
-        <AccountMenu
-          user={user}
-          onLogout={logout}
-          onClose={() => setIsAccountMenuOpen(false)}
-        />
-      )}
+
     </header>
   );
 };
