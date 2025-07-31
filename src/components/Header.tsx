@@ -71,7 +71,6 @@ const Header: React.FC<HeaderProps> = ({ onCartOpen }) => {
                       >
                         <User size={20} />
                         <span className="font-subheading">{user.name}</span>
-                        <span className="text-xs text-green-600">✓</span>
                       </button>
                     ) : (
                       <div className="flex items-center space-x-2">
@@ -92,9 +91,7 @@ const Header: React.FC<HeaderProps> = ({ onCartOpen }) => {
                       </div>
                     )}
                     
-                    <button className="bg-cyan-600 text-white px-6 py-2 rounded-full font-subheading hover:bg-cyan-500 transition-colors">
-                      Pre-order
-                    </button>
+
                   </div>
 
                             <div className="md:hidden flex items-center space-x-2">
@@ -147,8 +144,7 @@ const Header: React.FC<HeaderProps> = ({ onCartOpen }) => {
                 <span>Sign In / Sign Up</span>
               </button>
             )}
-            <button className="w-full bg-cyan-600 text-white px-6 py-2 rounded-full font-subheading hover:bg-cyan-500 transition-colors">
-              Pre-order Now
+
             </button>
           </div>
         </div>

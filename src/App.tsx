@@ -16,7 +16,7 @@ import OrderTracking from './components/OrderTracking';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ErrorBoundary from './components/ErrorBoundary';
-import AuthDebug from './components/AuthDebug';
+
 
 function AppContent() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -87,8 +87,7 @@ function AppContent() {
         onClose={closeProfileModal}
       />
       
-      {/* Debug Component - Remove in production */}
-      <AuthDebug />
+      
     </div>
   );
 }
