@@ -148,9 +148,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
       
       if (error) throw error;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error signing in with Google:', error);
-      throw error;
+      throw new Error(error.message || 'Failed to sign in with Google');
     }
   };
 

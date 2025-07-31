@@ -44,11 +44,12 @@ const Header: React.FC<HeaderProps> = ({ onCartOpen }) => {
           
           <nav className="hidden md:block">
             <div className="flex items-center space-x-8">
-                                    <a href="#features" className="font-body text-gray-600 hover:text-cyan-600 transition-colors">Features</a>
-                      <a href="#audience" className="font-body text-gray-600 hover:text-cyan-600 transition-colors">Designed for You</a>
-                      <a href="#innovation" className="font-body text-gray-600 hover:text-cyan-600 transition-colors">Innovation</a>
-                      <a href="#faq" className="font-body text-gray-600 hover:text-cyan-600 transition-colors">FAQ</a>
-                      <a href="#contact" className="font-body text-gray-600 hover:text-cyan-600 transition-colors">Contact</a>
+              <a href="#features" className="font-body text-gray-600 hover:text-cyan-600 transition-colors">Features</a>
+              <a href="#audience" className="font-body text-gray-600 hover:text-cyan-600 transition-colors">Designed for You</a>
+              <a href="#innovation" className="font-body text-gray-600 hover:text-cyan-600 transition-colors">Innovation</a>
+              <a href="#faq" className="font-body text-gray-600 hover:text-cyan-600 transition-colors">FAQ</a>
+              <a href="#contact" className="font-body text-gray-600 hover:text-cyan-600 transition-colors">Contact</a>
+              <a href="#track" className="font-body text-gray-600 hover:text-cyan-600 transition-colors">Track Order</a>
             </div>
           </nav>
 
