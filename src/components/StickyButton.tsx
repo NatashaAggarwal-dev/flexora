@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingCart, X, LogIn } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { ShoppingCart, X } from 'lucide-react';
 
 const StickyButton = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const { user, openAuthModal } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,19 +70,9 @@ const StickyButton = () => {
                   </div>
                 </div>
                 
-                {user ? (
-                  <button className="w-full bg-gradient-to-r from-cyan-400 to-blue-500 text-black py-4 rounded-full font-bold text-lg hover:from-cyan-300 hover:to-blue-400 transition-all duration-300">
-                    Secure Pre-order
-                  </button>
-                ) : (
-                  <button 
-                    onClick={openAuthModal}
-                    className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-full font-bold text-lg hover:from-purple-500 hover:to-pink-500 transition-all duration-300 flex items-center justify-center space-x-2"
-                  >
-                    <LogIn size={20} />
-                    <span>Sign In to Pre-order</span>
-                  </button>
-                )}
+                <button className="w-full bg-gradient-to-r from-cyan-400 to-blue-500 text-black py-4 rounded-full font-bold text-lg hover:from-cyan-300 hover:to-blue-400 transition-all duration-300">
+                  Secure Pre-order
+                </button>
                 
                 <p className="text-gray-400 text-xs">
                   No charge until shipping. Cancel anytime.

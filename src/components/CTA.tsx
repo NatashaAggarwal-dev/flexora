@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Check, Mail, ShoppingCart, X, LogIn } from 'lucide-react';
+import { ArrowRight, Check, Mail, ShoppingCart, X } from 'lucide-react';
 import AddToCartButton from './AddToCartButton';
-import { useAuth } from '../context/AuthContext';
 
 const CTA = () => {
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [showDemoModal, setShowDemoModal] = useState(false);
-  const { user, openAuthModal } = useAuth();
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,15 +73,7 @@ const CTA = () => {
             Schedule Demo
           </button>
           
-          {!user && (
-            <button 
-              onClick={openAuthModal}
-              className="flex items-center space-x-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-subheading text-lg hover:from-purple-500 hover:to-pink-500 transition-all duration-300"
-            >
-              <LogIn size={20} />
-              <span>Join Flexora</span>
-            </button>
-          )}
+
         </div>
 
         {/* Email Signup */}

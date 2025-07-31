@@ -1,7 +1,6 @@
 import React from 'react';
-import { ShoppingCart, Check, LogIn } from 'lucide-react';
+import { ShoppingCart, Check } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { useAuth } from '../context/AuthContext';
 
 interface AddToCartButtonProps {
   item: {
@@ -23,15 +22,10 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   className = ''
 }) => {
   const { addToCart, cartItems } = useCart();
-  const { user, openAuthModal } = useAuth();
   
   const isInCart = cartItems.some(cartItem => cartItem.id === item.id);
 
   const handleAddToCart = () => {
-    if (!user) {
-      openAuthModal();
-      return;
-    }
     addToCart(item);
   };
 
