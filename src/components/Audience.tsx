@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { GraduationCap, Briefcase, Gamepad2 } from 'lucide-react';
 import AddToCartButton from './AddToCartButton';
 
-const Audience = () => {
+const Audience = ({ onAuthOpen }: { onAuthOpen?: () => void }) => {
   const [activeTab, setActiveTab] = useState(0);
   
   const audiences = [
@@ -112,7 +112,7 @@ const Audience = () => {
               ))}
             </ul>
             
-            <div className="flex flex-col sm:flex-row gap-4 mt-6 sm:mt-8">
+            <div className="mt-6 sm:mt-8">
               <AddToCartButton
                 item={{
                   id: activeTab + 1,
@@ -122,12 +122,10 @@ const Audience = () => {
                   color: "Classic Black"
                 }}
                 variant="primary"
-                size="md"
-                className="flex-1"
+                size="lg"
+                className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white hover:from-cyan-500 hover:to-blue-500 shadow-lg shadow-cyan-500/25"
+                onAuthOpen={onAuthOpen}
               />
-              <button className="bg-gray-800 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-subheading text-sm sm:text-base hover:bg-gray-700 transition-all duration-300 transform hover:scale-105">
-                Learn More
-              </button>
             </div>
           </div>
           

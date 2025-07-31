@@ -90,7 +90,7 @@ function AppContent() {
       <Header onCartOpen={() => setIsCartOpen(true)} onAuthOpen={() => setIsAuthModalOpen(true)} />
       <Hero />
       <Features />
-      <Audience />
+      <Audience onAuthOpen={() => setIsAuthModalOpen(true)} />
       <Innovation />
       <FAQ />
       <Contact />
