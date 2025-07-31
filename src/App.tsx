@@ -60,7 +60,7 @@ function AppContent() {
   if (currentPage === 'tracking') {
     return (
       <div className="min-h-screen bg-white">
-        <Header onCartOpen={() => setIsCartOpen(true)} onAuthOpen={() => setIsAuthModalOpen(true)} />
+        <Header onCartOpen={() => setIsCartOpen(true)} onAuthOpen={() => setIsAuthModalOpen(true)} isCartOpen={isCartOpen} />
         <OrderTracking />
         <Footer />
         <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
@@ -77,7 +77,7 @@ function AppContent() {
     }
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header onCartOpen={() => setIsCartOpen(true)} onAuthOpen={() => setIsAuthModalOpen(true)} />
+        <Header onCartOpen={() => setIsCartOpen(true)} onAuthOpen={() => setIsAuthModalOpen(true)} isCartOpen={isCartOpen} />
         <UserProfile />
         <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
         <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
@@ -87,7 +87,7 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <Header onCartOpen={() => setIsCartOpen(true)} onAuthOpen={() => setIsAuthModalOpen(true)} />
+      <Header onCartOpen={() => setIsCartOpen(true)} onAuthOpen={() => setIsAuthModalOpen(true)} isCartOpen={isCartOpen} />
       <Hero />
       <Features />
       <Audience onAuthOpen={() => setIsAuthModalOpen(true)} />

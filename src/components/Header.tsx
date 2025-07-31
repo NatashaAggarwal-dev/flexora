@@ -6,9 +6,10 @@ import { useAuth } from '../context/AuthContext';
 interface HeaderProps {
   onCartOpen: () => void;
   onAuthOpen: () => void;
+  isCartOpen?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ onCartOpen, onAuthOpen }) => {
+const Header: React.FC<HeaderProps> = ({ onCartOpen, onAuthOpen, isCartOpen = false }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { getTotalItems } = useCart();
@@ -24,6 +25,8 @@ const Header: React.FC<HeaderProps> = ({ onCartOpen, onAuthOpen }) => {
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
+      isCartOpen ? 'opacity-0 pointer-events-none' : ''
+    } ${
       isScrolled ? 'bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm' : 'bg-transparent'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
